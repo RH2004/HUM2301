@@ -1,0 +1,13 @@
+/* small components and helpers */
+.lead { font-size:1.05rem; color:var(--muted); }
+.timeline { list-style: none; padding-left:0; }
+.timeline li { padding: .4rem 0; border-bottom:1px dashed rgba(255,255,255,0.03); }
+
+.cta-row { display:flex; gap: .6rem; margin-top:1rem; }
+.link { color:var(--text); font-weight:600; }
+
+blockquote { border-left:4px solid var(--gold); padding-left:1rem; color:var(--muted); background: rgba(212,175,55,0.03); border-radius:6px; padding:1rem; }
+figcaption { font-size:.9rem; color:rgba(255,255,255,0.6); margin-top:.4rem; }
+
+/* small accessibility focus */
+.video-card:focus { outline:3px solid rgba(212,175,55,0.16); }

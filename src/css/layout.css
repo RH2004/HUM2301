@@ -1,0 +1,44 @@
+/* Header */
+.site-header { border-bottom:1px solid rgba(255,255,255,0.03); background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(8,8,8,0.9)); position:sticky; top:0; z-index:30; }
+.header-inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.brand { display:flex; align-items:center; gap:.6rem; text-decoration:none; color:var(--text); }
+.logo { width:44px; height:44px; display:block; }
+.brand-title { font-weight:700; letter-spacing:.6px; color:var(--gold); }
+
+.main-nav { display:flex; align-items:center; gap:1rem; }
+.nav-list { display:flex; gap:.6rem; list-style:none; padding:0; margin:0; }
+.nav-list a { padding:.5rem .6rem; color:var(--muted); border-radius:6px; }
+.nav-list a:hover { background: rgba(212,175,55,0.08); color:var(--gold); }
+
+/* Hero */
+.hero { display:grid; grid-template-columns: 1fr 300px; gap:1.2rem; align-items:center; padding:2rem 0; }
+.hero-inner { padding-right:1rem; }
+.hero-pattern { width:100%; opacity:.12; }
+
+/* Quick links */
+.quick-links { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1rem; }
+
+/* Content layout */
+.content { padding: 2rem 0; }
+.grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+.gallery img { width:100%; height:auto; border-radius:8px; display:block; }
+
+/* Footer */
+.site-footer { border-top:1px solid rgba(255,255,255,0.03); padding:1rem 0; color:rgba(255,255,255,0.6); text-align:center; margin-top:2rem; }
+
+/* Team */
+.team-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
+.team-card { background: rgba(255,255,255,0.02); padding:1rem; border-radius:10px; text-align:center; }
+.team-card img { width:100%; height:180px; object-fit:cover; border-radius:8px 8px 6px 6px; }
+
+/* video-card */
+.video-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-top:1rem; }
+.video-card { background: rgba(255,255,255,0.02); padding:1rem; border-radius:10px; cursor:pointer; }
+.video-poster { background: rgba(0,0,0,0.45); width:100%; height:150px; display:flex; align-items:center; justify-content:center; font-size:2rem; border-radius:6px; margin-bottom:.6rem; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .hero { grid-template-columns: 1fr; }
+  .nav-list { display:none; }
+  #nav-toggle { display:inline-block; }
+}
