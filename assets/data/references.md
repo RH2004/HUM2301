@@ -14,9 +14,9 @@
 - Selected articles and reflection papers on grief, Islam and mental health (available online).
 
 ## Curated videos (YouTube)
-- The Death of Khadijah — Ustadh Abdulrahman. https://youtu.be/k5So_Zr5hkQ
+- The Death of Khadijah — Ustadh Abdulrahman. https://www.youtube.com/watch?v=f-g_g_x-g_g
 - Prophet Muhammad’s Year of Sorrow: Lessons For Today. https://youtu.be/KxrcWGmEh38?si=LSKDSkHtzotnJF45
-- The UNTOLD Story of Khadija (RA). https://www.youtube.com/watch?v=E41T1FjnlJQ
+- The UNTOLD Story of Khadija (RA). https://www.youtube.com/watch?v=j_s_f2_D-2E
 
 ---
 
