@@ -88,3 +88,96 @@
 .main-nav.is-active {
   display: block;
 }
+
+/* ===========================
+   Responsive vertical retractable mobile menu
+   =========================== */
+
+/* Hamburger button */
+.nav-hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: .5rem;
+  cursor: pointer;
+  gap: .25rem;
+  align-items: center;
+}
+.nav-hamburger:focus { outline: 3px solid rgba(212,175,55,0.18); border-radius:6px; }
+
+.hamburger-line {
+  display:block;
+  width:22px;
+  height:2px;
+  background: var(--gold);
+  margin:4px 0;
+  border-radius:2px;
+  transition: transform .25s ease, opacity .2s ease;
+}
+
+/* Mobile nav panel (off-canvas) */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 86%;
+  max-width: 360px;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(11,11,11,0.98), rgba(6,6,6,0.99));
+  box-shadow: -18px 0 60px rgba(0,0,0,0.6);
+  z-index: 120;
+  transition: right .36s cubic-bezier(.2,.9,.3,1);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-left: 1px solid rgba(212,175,55,0.06);
+}
+
+/* When open */
+.mobile-nav.open { right: 0; }
+.mobile-nav-inner { padding: 1.2rem; color: var(--text); height:100%; display:flex; flex-direction:column; }
+
+/* Close button */
+.nav-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.nav-close:focus { outline: 3px solid rgba(212,175,55,0.12); border-radius:6px; }
+
+/* Mobile link list */
+.mobile-nav-list { list-style:none; padding: 1rem 0; margin: 0; display:flex; flex-direction:column; gap: .6rem; }
+.mobile-nav-list a {
+  display:block; padding: .9rem 1rem; border-radius:8px; color: var(--text);
+  text-decoration: none; font-weight:600; background: transparent;
+}
+.mobile-nav-list a:hover, .mobile-nav-list a:focus { background: rgba(212,175,55,0.06); color: var(--gold); outline:none; }
+
+/* Hide desktop nav on small screens */
+@media (max-width: 900px) {
+  .desktop-nav { display: none; }
+  .nav-hamburger { display: inline-flex; }
+}
+
+/* On larger screens ensure mobile nav hidden and hamburger not shown */
+@media (min-width: 901px) {
+  .mobile-nav { display: none; }
+  .nav-hamburger { display: none; }
+}
+
+/* Slight page overlay while mobile menu open */
+.page-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.36); z-index: 110; opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+}
+.page-overlay.visible { opacity: 1; pointer-events: auto; }
+
+/* Accessibility: focus trap helpers (visual) */
+.mobile-nav-list a:focus { box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+
+/* Smooth slide for links (optional) */
+.mobile-nav-list a { transition: transform .18s ease, background .18s ease; }
+.mobile-nav-list a:active { transform: translateX(4px); }

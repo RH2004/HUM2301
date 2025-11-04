@@ -10,27 +10,79 @@
   <link rel="stylesheet" href="../css/animations.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="../../assets/images/logo.svg" alt="logo"><span class="brand-title">The Year of Sorrow</span></a>
-      <nav class="main-nav" aria-label="Main navigation">
-        <button id="nav-toggle" aria-expanded="false" aria-controls="nav-list">Menu</button>
-        <ul id="nav-list" class="nav-list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="story.html">The Story</a></li>
-          <li><a href="psyche.html">Psychology</a></li>
-          <li><a href="model.html">The Model</a></li>
-          <li><a href="sources.html">Sources</a></li>
-          <li><a href="team.html">Team</a></li>
-        </ul>
-      </nav>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">
+      <img src="../../assets/images/logo.svg" alt="Khadija Tribute logo" class="logo">
+      <span class="brand-title">The Year of Sorrow</span>
+    </a>
+
+    <!-- Desktop nav (visible on wide screens) -->
+    <nav class="main-nav desktop-nav" role="navigation" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="story.html">The Story</a></li>
+        <li><a href="psyche.html">Psychology</a></li>
+        <li><a href="model.html">The Model</a></li>
+        <li><a href="sources.html">Sources</a></li>
+        <li><a href="team.html">Team</a></li>
+      </ul>
+    </nav>
+
+    <!-- Mobile trigger -->
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Open menu" aria-controls="mobile-nav" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile sliding nav (hidden by default) -->
+  <nav id="mobile-nav" class="mobile-nav" aria-hidden="true" aria-label="Mobile navigation">
+    <div class="mobile-nav-inner">
+      <button id="nav-close" class="nav-close" aria-label="Close menu">&times;</button>
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-link">Home</a></li>
+        <li><a href="story.html" class="mobile-link">The Story</a></li>
+        <li><a href="psyche.html" class="mobile-link">Psychology</a></li>
+        <li><a href="model.html" class="mobile-link">The Model</a></li>
+        <li><a href="sources.html" class="mobile-link">Sources</a></li>
+        <li><a href="team.html" class="mobile-link">Team</a></li>
+      </ul>
     </div>
-  </header>
+  </nav>
+</header>
+
 
   <main class="container content">
     <article>
       <h1>The 3D Model — Design & Materials</h1>
-      <p class="lede">Our physical model is divided into three sections: the House, the Road, and the Cemetery. It uses light to represent the Prophet's inner light and the moment of grief when it fades.</p>
+      <p class="lede">Our physical model is divided into three sections: the House, the Road, and the Cemetery. Each section symbolizes a key moment in the Prophet’s journey through grief and faith during the Year of Sorrow.</p>
+
+      <section>
+        <h2>1. The House — Light and Intimacy</h2>
+        <p>
+          The house represents the Prophet Muhammad’s (PBUH) home with Khadija (RA). It is built as a small enclosure with a soft inner light, symbolizing warmth, love, and peace. 
+          The LED bulb inside glows gently to signify the comfort of companionship and the foundation of emotional and spiritual support that Khadija provided. 
+          The moment the light dims captures the Prophet’s immense loss after her passing.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. The Road — Journey and Reflection</h2>
+        <p>
+          The road connects the house and the cemetery. Its sand texture and faint footprints evoke the long, silent walks the Prophet (PBUH) would take in contemplation and remembrance. 
+          It serves as a physical and spiritual bridge between the world of companionship and solitude, reflecting the Prophet’s perseverance and connection with God amid hardship.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. The Cemetery — Loss and Serenity</h2>
+        <p>
+          The cemetery symbolizes the final resting place of Khadija (RA). It is designed with simple clay and stone graves, emphasizing humility and peace. 
+          A single symbolic marker stands without inscription, representing both respect and restraint. The muted tones and calm arrangement convey acceptance and the enduring bond of love and faith.
+        </p>
+      </section>
 
       <section>
         <h2>Materials</h2>
@@ -44,29 +96,14 @@
       </section>
 
       <section>
-        <h2>Construction notes</h2>
+        <h2>Construction Notes</h2>
         <ol>
-          <li>Base: a rectangular platform (40x20 cm). Mark three zones: house, road, cemetery.</li>
+          <li>Base: a rectangular platform (40x20 cm). Mark three zones — house, road, cemetery.</li>
           <li>House: small cardboard enclosure; fix LED inside and wire to a hidden switch.</li>
           <li>Road: sand texture fixed with diluted PVA glue; sprinkle small pebbles and footprints near the edge.</li>
           <li>Cemetery: low stone graves with one symbolic marker for Khadija (no inscription).</li>
           <li>Finishing: gold leaf accents at the house entrance to represent warmth; soft matte paint elsewhere.</li>
         </ol>
-      </section>
-
-      <section>
-        <h2>QR narration</h2>
-        <p>We recorded a short narration to accompany the model. Scan the QR at the base of the model to hear the explanation. You can also play it here:</p>
-        <button class="btn btn-outline" id="play-qr-audio">Play narration</button>
-      </section>
-
-      <section class="gallery">
-        <h3>Photos</h3>
-        <div class="grid">
-          <figure><img src="../../assets/images/model/house-1.jpg" alt="house section of model"><figcaption>House — warm gold light</figcaption></figure>
-          <figure><img src="../../assets/images/model/road-1.jpg" alt="road section of model"><figcaption>The road — journey and transition</figcaption></figure>
-          <figure><img src="../../assets/images/model/cemetery-1.jpg" alt="cemetery section of model"><figcaption>Cemetery — memory and finality</figcaption></figure>
-        </div>
       </section>
     </article>
   </main>
@@ -79,6 +116,5 @@
   </footer>
 
   <script src="../js/main.js" defer></script>
-  <script src="../js/qr-audio.js" defer></script>
 </body>
 </html>

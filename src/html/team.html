@@ -10,46 +10,67 @@
   <link rel="stylesheet" href="../css/animations.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html">
-        <img src="../../assets/images/logo.svg" alt="Khadija Tribute logo" class="logo">
-        <span class="brand-title">The Year of Sorrow</span>
-      </a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">
+      <img src="../../assets/images/logo.svg" alt="Khadija Tribute logo" class="logo">
+      <span class="brand-title">The Year of Sorrow</span>
+    </a>
 
-      <nav class="main-nav" role="navigation" aria-label="Main navigation">
-        <button id="nav-toggle" aria-expanded="false" aria-controls="nav-list">Menu</button>
-        <ul id="nav-list" class="nav-list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="story.html">The Story</a></li>
-          <li><a href="psyche.html">Psychology</a></li>
-          <li><a href="model.html">The Model</a></li>
-          <li><a href="sources.html">Sources</a></li>
-          <li><a href="team.html">Team</a></li>
-        </ul>
-      </nav>
+    <!-- Desktop nav (visible on wide screens) -->
+    <nav class="main-nav desktop-nav" role="navigation" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="story.html">The Story</a></li>
+        <li><a href="psyche.html">Psychology</a></li>
+        <li><a href="model.html">The Model</a></li>
+        <li><a href="sources.html">Sources</a></li>
+        <li><a href="team.html">Team</a></li>
+      </ul>
+    </nav>
+
+    <!-- Mobile trigger -->
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Open menu" aria-controls="mobile-nav" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile sliding nav (hidden by default) -->
+  <nav id="mobile-nav" class="mobile-nav" aria-hidden="true" aria-label="Mobile navigation">
+    <div class="mobile-nav-inner">
+      <button id="nav-close" class="nav-close" aria-label="Close menu">&times;</button>
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-link">Home</a></li>
+        <li><a href="story.html" class="mobile-link">The Story</a></li>
+        <li><a href="psyche.html" class="mobile-link">Psychology</a></li>
+        <li><a href="model.html" class="mobile-link">The Model</a></li>
+        <li><a href="sources.html" class="mobile-link">Sources</a></li>
+        <li><a href="team.html" class="mobile-link">Team</a></li>
+      </ul>
     </div>
-  </header>
+  </nav>
+</header>
 
   <main class="container content">
     <article>
       <h1>Meet the Team</h1>
-      <p class="lede">Short bios and roles for each member involved in research, build and presentation.</p>
+      <p class="lede">
+        
+      </p>
 
       <section class="team-grid">
         <div class="team-card">
           <h3>Reda Heddad</h3>
-          <p>Project lead, research and content.</p>
         </div>
 
         <div class="team-card">
           <h3>Rita Mrani</h3>
-          <p>3D model design and fabrication.</p>
         </div>
 
         <div class="team-card">
           <h3>Oussama Agourram</h3>
-          <p>Web development and technical support.</p>
         </div>
       </section>
     </article>
