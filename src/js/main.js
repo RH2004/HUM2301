@@ -135,12 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Close the mobile nav when a mobile link is clicked (allow navigation to start)
+    function closeNavAndFollowLink(e) {
+      e.preventDefault();
+      const href = e.currentTarget.href;
+      closeNav();
+      window.location.href = href;
+    }
+
+    // Close the mobile nav when a mobile link is clicked
     mobileNav.querySelectorAll('.mobile-nav-list a').forEach(a => {
-      a.addEventListener('click', () => {
-        // small timeout so link navigation can start before UI closes
-        setTimeout(() => closeNav(), 160);
-      });
+      a.addEventListener('click', closeNavAndFollowLink);
     });
 
     // Safety: ensure mobile nav is clickable (z-index/pointer-events)
