@@ -82,17 +82,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close menu when a link is clicked (allow navigation to proceed)
     mobileNav.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', (e) => {
-        // Close UI immediately but delay scroll restoration
-        mobileNav.classList.remove('open');
-        mobileNav.setAttribute('aria-hidden', 'true');
-        hamburger.setAttribute('aria-expanded', 'false');
-        overlay.classList.remove('visible');
+        const href = a.getAttribute('href');
         
-        // Delay scroll restoration to allow navigation to complete
-        setTimeout(() => {
-          document.documentElement.style.overflow = '';
-          document.body.style.overflow = '';
-        }, 100);
+        // Only close menu, don't interfere with navigation
+        // For external/page links, close immediately and restore scroll after short delay
+        if (href && !href.startsWith('#')) {
+          mobileNav.classList.remove('open');
+          mobileNav.setAttribute('aria-hidden', 'true');
+          hamburger.setAttribute('aria-expanded', 'false');
+          overlay.classList.remove('visible');
+          
+          // Restore scroll after a brief delay to allow navigation
+          setTimeout(() => {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+          }, 50);
+        } else {
+          // For anchor links, close menu normally
+          closeMenu();
+        }
       });
     });
 
