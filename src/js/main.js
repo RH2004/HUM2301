@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---------------------------
-     2) Mobile drawer (hamburger) behavior
+     2) Mobile drawer (hamburger) behavior — improved (no focus event interception)
      --------------------------- */
   (function setupMobileDrawer() {
     const hamburger = document.getElementById('nav-hamburger');
@@ -38,12 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let lastFocused = null;
 
-    // create overlay element once
+    // create overlay element once (or reuse)
     let overlay = document.querySelector('.page-overlay');
     if (!overlay) {
       overlay = document.createElement('div');
       overlay.className = 'page-overlay';
       document.body.appendChild(overlay);
+    }
+
+    // helper: get focusable elements inside mobile nav (for Tab trap)
+    function getFocusableElements(container) {
+      if (!container) return [];
+      const selectors = 'a[href], button:not([disabled]), textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])';
+      return Array.from(container.querySelectorAll(selectors)).filter(el => el.offsetParent !== null);
     }
 
     function openNav() {
@@ -53,15 +60,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
       overlay.classList.add('visible');
 
-      // focus first focusable link in the mobile nav
-      const firstLink = mobileNav.querySelector('.mobile-nav-list a, button, [tabindex]:not([tabindex="-1"])');
-      if (firstLink) firstLink.focus();
+      // focus the first link inside the mobile nav
+      const focusables = getFocusableElements(mobileNav);
+      if (focusables.length) focusables[0].focus();
 
-      // add focus trap
-      document.addEventListener('focus', trapFocus, true);
-      // prevent body scroll while open
+      // prevent body scroll while menu open
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
+
+      // attach Tab trapping handler
+      document.addEventListener('keydown', handleKeydownTrap);
     }
 
     function closeNav() {
@@ -70,21 +78,39 @@ document.addEventListener('DOMContentLoaded', () => {
       if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
       overlay.classList.remove('visible');
 
-      // remove focus trap
-      document.removeEventListener('focus', trapFocus, true);
       // restore focus
       if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+
       // restore body scroll
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
+
+      // detach Tab trapping handler
+      document.removeEventListener('keydown', handleKeydownTrap);
     }
 
-    function trapFocus(e) {
-      // If focus goes outside the mobile nav, redirect it back to the first link
-      if (!mobileNav.contains(e.target)) {
-        const firstLink = mobileNav.querySelector('.mobile-nav-list a, button, [tabindex]:not([tabindex="-1"])');
-        if (firstLink) firstLink.focus();
-        e.stopPropagation();
+    // Tab/Shift+Tab key trap handler — keeps focus cycling inside mobileNav
+    function handleKeydownTrap(e) {
+      if (e.key !== 'Tab') return;
+      const focusables = getFocusableElements(mobileNav);
+      if (!focusables.length) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey) {
+        // Shift+Tab
+        if (active === first || !mobileNav.contains(active)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        // Tab
+        if (active === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     }
 
@@ -94,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (expanded) closeNav(); else openNav();
     });
 
-    // Close button
+    // Close button inside nav
     if (closeBtn) {
       closeBtn.addEventListener('click', () => closeNav());
     }
@@ -109,13 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Close the mobile nav when a mobile link is clicked (gives time for navigation)
+    // Close the mobile nav when a mobile link is clicked (allow navigation to start)
     mobileNav.querySelectorAll('.mobile-nav-list a').forEach(a => {
       a.addEventListener('click', () => {
         // small timeout so link navigation can start before UI closes
         setTimeout(() => closeNav(), 160);
       });
     });
+
+    // Safety: ensure mobile nav is clickable (z-index/pointer-events)
+    mobileNav.style.pointerEvents = 'auto';
   })();
 
 
