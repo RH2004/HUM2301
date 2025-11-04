@@ -84,19 +84,25 @@ document.addEventListener('DOMContentLoaded', () => {
       a.addEventListener('click', (e) => {
         const href = a.getAttribute('href');
         
-        // Only close menu, don't interfere with navigation
-        // For external/page links, close immediately and restore scroll after short delay
+        // For page navigation links
         if (href && !href.startsWith('#')) {
+          // Don't prevent default, but ensure navigation happens
+          // Close menu UI first
           mobileNav.classList.remove('open');
           mobileNav.setAttribute('aria-hidden', 'true');
           hamburger.setAttribute('aria-expanded', 'false');
           overlay.classList.remove('visible');
           
-          // Restore scroll after a brief delay to allow navigation
+          // Immediately restore scroll
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          
+          // Force navigation on mobile if click doesn't work
           setTimeout(() => {
-            document.documentElement.style.overflow = '';
-            document.body.style.overflow = '';
-          }, 50);
+            if (window.location.href.indexOf(href) === -1) {
+              window.location.href = href;
+            }
+          }, 10);
         } else {
           // For anchor links, close menu normally
           closeMenu();
