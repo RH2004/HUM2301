@@ -1,44 +1,38 @@
-// main.js : UI helpers (nav toggle, mobile drawer, smooth scroll, QR audio)
+// main.js — simple, robust UI helpers (nav toggle, mobile drawer, smooth scroll, QR audio)
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------------------------
-     1) Existing nav-toggle buttons (desktop/header compact toggles)
+     1) Desktop nav-toggle buttons (unchanged)
      --------------------------- */
   document.querySelectorAll('button[id^="nav-toggle"]').forEach(btn => {
-    const listId = btn.getAttribute('aria-controls') || btn.nextElementSibling?.id;
-    const list = listId ? document.getElementById(listId) : null;
     const nav = btn.closest('.main-nav');
-
     btn.addEventListener('click', () => {
-      if (nav) {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
-        nav.classList.toggle('is-active');
+      if (!nav) return;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      nav.classList.toggle('is-active');
 
-        // Close the nav when any link inside it is clicked
-        nav.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => {
-            btn.setAttribute('aria-expanded', 'false');
-            nav.classList.remove('is-active');
-          });
+      // close nav on link click
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          btn.setAttribute('aria-expanded', 'false');
+          nav.classList.remove('is-active');
         });
-      }
+      });
     });
   });
 
   /* ---------------------------
-     2) Mobile drawer (hamburger) behavior — improved (no focus event interception)
+     2) Simple mobile drawer (minimal and reliable)
      --------------------------- */
-  (function setupMobileDrawer() {
+  (function simpleMobileDrawer() {
     const hamburger = document.getElementById('nav-hamburger');
     const mobileNav = document.getElementById('mobile-nav');
     const closeBtn = document.getElementById('nav-close');
 
-    if (!hamburger || !mobileNav) return; // nothing to do if mobile UI not present
+    if (!hamburger || !mobileNav) return;
 
-    let lastFocused = null;
-
-    // create overlay element once (or reuse)
+    // create or reuse overlay
     let overlay = document.querySelector('.page-overlay');
     if (!overlay) {
       overlay = document.createElement('div');
@@ -46,125 +40,68 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.appendChild(overlay);
     }
 
-    // helper: get focusable elements inside mobile nav (for Tab trap)
-    function getFocusableElements(container) {
-      if (!container) return [];
-      const selectors = 'a[href], button:not([disabled]), textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])';
-      return Array.from(container.querySelectorAll(selectors)).filter(el => el.offsetParent !== null);
-    }
-
-    function openNav() {
-      lastFocused = document.activeElement;
+    function openMenu() {
       mobileNav.classList.add('open');
       mobileNav.setAttribute('aria-hidden', 'false');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-expanded', 'true');
       overlay.classList.add('visible');
-
-      // focus the first link inside the mobile nav
-      const focusables = getFocusableElements(mobileNav);
-      if (focusables.length) focusables[0].focus();
-
-      // prevent body scroll while menu open
+      // prevent background scroll
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
-
-      // attach Tab trapping handler
-      document.addEventListener('keydown', handleKeydownTrap);
     }
 
-    function closeNav() {
+    function closeMenu() {
       mobileNav.classList.remove('open');
       mobileNav.setAttribute('aria-hidden', 'true');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-expanded', 'false');
       overlay.classList.remove('visible');
-
-      // restore focus
-      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-
-      // restore body scroll
+      // restore scroll
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-
-      // detach Tab trapping handler
-      document.removeEventListener('keydown', handleKeydownTrap);
     }
 
-    // Tab/Shift+Tab key trap handler — keeps focus cycling inside mobileNav
-    function handleKeydownTrap(e) {
-      if (e.key !== 'Tab') return;
-      const focusables = getFocusableElements(mobileNav);
-      if (!focusables.length) return;
-
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      const active = document.activeElement;
-
-      if (e.shiftKey) {
-        // Shift+Tab
-        if (active === first || !mobileNav.contains(active)) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        // Tab
-        if (active === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
-
-    // Toggle when hamburger clicked
+    // Toggle on hamburger click
     hamburger.addEventListener('click', () => {
-      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
-      if (expanded) closeNav(); else openNav();
+      const isOpen = mobileNav.classList.contains('open');
+      if (isOpen) closeMenu(); else openMenu();
     });
 
-    // Close button inside nav
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => closeNav());
-    }
+    // Close button
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
 
-    // Overlay click closes nav
-    overlay.addEventListener('click', () => closeNav());
+    // Overlay click closes menu
+    overlay.addEventListener('click', closeMenu);
 
     // Close on Escape
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (mobileNav.classList.contains('open')) closeNav();
+      if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+        closeMenu();
       }
     });
 
-    function closeNavAndFollowLink(e) {
-      e.preventDefault();
-      const href = e.currentTarget.href;
-      closeNav();
-      window.location.href = href;
-    }
-
-    // Close the mobile nav when a mobile link is clicked
-    mobileNav.querySelectorAll('.mobile-nav-list a').forEach(a => {
-      a.addEventListener('click', closeNavAndFollowLink);
+    // Close menu immediately when a link is clicked (lets navigation continue)
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        // do not prevent default — allow navigation; close UI right away
+        closeMenu();
+      });
     });
 
-    // Safety: ensure mobile nav is clickable (z-index/pointer-events)
+    // Ensure mobileNav is interactive
     mobileNav.style.pointerEvents = 'auto';
   })();
 
-
   /* ---------------------------
-     3) Smooth scroll for same-page anchors (internal links starting with '#')
+     3) Smooth scroll for internal anchors
      --------------------------- */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const href = a.getAttribute('href') || '';
-      // allow if href is exactly '#' (scroll to top) or a real id
       if (href === '#') {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
-
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
@@ -173,22 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-
   /* ---------------------------
-     4) Play QR audio button wiring (if present)
+     4) QR audio play handler (if present)
      --------------------------- */
   const playBtn = document.getElementById('play-qr-audio');
   if (playBtn) {
-    playBtn.addEventListener('click', async () => {
-      const audioPlayed = window.QR_AUDIO && typeof window.QR_AUDIO.play === 'function';
-      if (audioPlayed) {
-        window.QR_AUDIO.play().catch(() => { console.warn('Audio playback prevented by browser policy'); });
+    playBtn.addEventListener('click', () => {
+      const audioObj = window.QR_AUDIO;
+      if (audioObj && typeof audioObj.play === 'function') {
+        audioObj.play().catch(()=>{ console.warn('Audio playback prevented'); });
       } else {
-        // fallback path relative to the HTML file — keep your original path if different
         const audio = new Audio('../../assets/audio/narration-qr.mp3');
-        audio.play().catch(()=>{ console.warn('Audio playback prevented by browser policy'); });
+        audio.play().catch(()=>{ console.warn('Audio playback prevented'); });
       }
     });
   }
 
-});
+}); 
