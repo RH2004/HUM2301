@@ -76,5 +76,5 @@ def batch_create_qr_codes(urls, output_dir="qr_codes"):
 if __name__ == "__main__":
     # Single URL example
     print("=== Single URL Example ===")
-    create_qr_code("https://hum-2301.vercel.app/index.html")
+    create_qr_code("https://alakhawayn365-my.sharepoint.com/:w:/g/personal/r_heddad_aui_ma/EUf4U6yuQNRHuZIiMKlRci4BpF30RCKe5GIK9E5fsv9EnA?e=1PuBqQ")
     

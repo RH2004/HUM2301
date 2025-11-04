@@ -79,11 +79,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Close menu immediately when a link is clicked (lets navigation continue)
+    // Close menu when a link is clicked (allow navigation to proceed)
     mobileNav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        // do not prevent default — allow navigation; close UI right away
-        closeMenu();
+      a.addEventListener('click', (e) => {
+        // Close UI immediately but delay scroll restoration
+        mobileNav.classList.remove('open');
+        mobileNav.setAttribute('aria-hidden', 'true');
+        hamburger.setAttribute('aria-expanded', 'false');
+        overlay.classList.remove('visible');
+        
+        // Delay scroll restoration to allow navigation to complete
+        setTimeout(() => {
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+        }, 100);
       });
     });
 
@@ -126,4 +135,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-}); 
+});
