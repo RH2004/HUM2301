@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (list) {
         const expanded = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!expanded));
-        list.style.display = expanded ? 'none' : 'flex';
+        list.classList.toggle('is-active');
       }
     });
   });

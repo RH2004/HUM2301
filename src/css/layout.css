@@ -37,8 +37,54 @@
 .video-poster { background: rgba(0,0,0,0.45); width:100%; height:150px; display:flex; align-items:center; justify-content:center; font-size:2rem; border-radius:6px; margin-bottom:.6rem; }
 
 /* Responsive */
-@media (max-width:900px) {
-  .hero { grid-template-columns: 1fr; }
-  .nav-list { display:none; }
-  #nav-toggle { display:inline-block; }
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-inner {
+    padding-right: 0;
+  }
+  .nav-list {
+    display: none;
+  }
+  #nav-toggle {
+    display: inline-block;
+  }
+  .header-inner {
+    justify-content: space-between;
+  }
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+  }
+  .main-nav.is-active {
+    display: block;
+  }
+  .nav-list {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid,
+  .quick-links,
+  .team-grid,
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+  .header-inner {
+    padding: 0 1rem;
+  }
+}
+
+.main-nav.is-active {
+  display: block;
 }
